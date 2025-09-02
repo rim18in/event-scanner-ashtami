@@ -117,7 +117,8 @@
             paymentMethod: '37',   // Replace 5 with your Payment Method field ID
             checkinStatusAshtami: '66',    // Replace 6 with your Check-in Status panchami field ID
             numberOf: '36',   // Replace 7 with your Number of People Attending field ID
-            eventDays: '35'    // Replace 8 with your Event days you want attend field ID
+            eventDays: '35',    // Replace 8 with your Event days you want attend field ID
+			member: '68'
         };
 
         // ===== SCANNER SYSTEM =====
@@ -213,14 +214,28 @@
                 updateStatistics();
                 
                 // Step 6: Show success message
+                if (submissionData.paymentMethod == 'Cash  at Venue'){
                 showResult(`✅ CHECK-IN SUCCESSFUL!<br>
                            <strong>Welcome ${submissionData.name}!</strong><br>
                            Email: ${submissionData.email}<br>
                            Payment: ${submissionData.paymentMethod}<br>
                            Number of people: ${submissionData.numberOf}<br>
                            Time: ${new Date().toLocaleTimeString()}<br>
-                           <small>Total Checked In: ${checkedInTotal}</small>`, 'success');
-                
+						   Member: ${submissionData.member}<br>
+                           <small>Total Checked In: ${checkedInTotal}</small>`, 'warning');
+			   }
+			   else
+			   {
+	
+				showResult(`✅ CHECK-IN SUCCESSFUL!<br>
+						   <strong>Welcome ${submissionData.name}!</strong><br>
+						   Email: ${submissionData.email}<br>
+						   Payment: ${submissionData.paymentMethod}<br>
+						   Number of people: ${submissionData.numberOf}<br>
+						   Time: ${new Date().toLocaleTimeString()}<br>
+						   Member: ${submissionData.member}<br>
+						   <small>Total Checked In: ${checkedInTotal}</small>`, 'success');
+				}
                 console.log('Check-in completed successfully');
                 
             } catch (error) {
@@ -274,6 +289,7 @@
                 numberOf: answers[FIELD_IDS.numberOf]?.answer || 'Unknown',
                 eventDays: Array.isArray(eventDaysRaw) ? eventDaysRaw.join(", ") : eventDaysRaw || 'Unknown',
                 alreadyCheckedIn: answers[FIELD_IDS.checkinStatusAshtami]?.answer === 'Yes',
+				member: answers[FIELD_IDS.member]?.answer || 'Unknown' ,
                 hasAshtami: hasAshtami
             };
             
